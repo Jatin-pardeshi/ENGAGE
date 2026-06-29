@@ -1,0 +1,29 @@
+.mood-filter-container {
+  padding: var(--spacing-md);
+  background-color: var(--pastel-orange);
+  border-bottom: var(--border-thick);
+}
+
+.mood-filter-scroll {
+  display: flex;
+  gap: var(--spacing-md);
+  overflow-x: auto;
+  /* hide scrollbar */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mood-filter-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.mood-btn {
+  background-color: #fff;
+  white-space: nowrap;
+}
+
+.mood-btn.active {
+  background-color: var(--pastel-yellow);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px #000;
+}

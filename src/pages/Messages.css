@@ -1,0 +1,123 @@
+.messages-page {
+  display: flex;
+  height: calc(100vh - 40px);
+  gap: var(--spacing-md);
+  margin: var(--spacing-md);
+}
+
+.messages-sidebar {
+  width: 300px;
+  background-color: var(--pastel-yellow);
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-sidebar h3 {
+  padding: var(--spacing-md);
+  border-bottom: var(--border-thick);
+  margin: 0;
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-bottom: var(--border-thin);
+  cursor: pointer;
+}
+
+.conversation-item.active {
+  background-color: #fff;
+  border-left: 8px solid var(--pastel-pink);
+}
+
+.convo-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Only non-brutalist shape for contrast */
+}
+
+.convo-details h4 {
+  margin: 0 0 0.25rem 0;
+}
+.convo-details p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+}
+
+.chat-header {
+  padding: var(--spacing-md);
+  border-bottom: var(--border-thick);
+  background-color: #fff;
+}
+.chat-header h3 {
+  margin: 0;
+}
+
+.chat-history {
+  flex: 1;
+  padding: var(--spacing-md);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.chat-bubble-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.chat-bubble-wrapper.mine {
+  align-self: flex-end;
+}
+
+.chat-bubble-wrapper.theirs {
+  align-self: flex-start;
+}
+
+.chat-author {
+  font-size: 0.75rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin-bottom: 2px;
+  margin-left: 4px;
+}
+
+.chat-bubble {
+  padding: 0.75rem 1rem;
+  border: var(--border-thick);
+  box-shadow: 2px 2px 0px 0px #000;
+  font-size: 1rem;
+}
+
+.chat-bubble.pink {
+  background-color: var(--pastel-pink);
+}
+
+.chat-bubble.blue {
+  background-color: var(--pastel-blue);
+}
+
+.chat-input-area {
+  display: flex;
+  padding: var(--spacing-md);
+  gap: var(--spacing-sm);
+  border-top: var(--border-thick);
+  background-color: #fff;
+}

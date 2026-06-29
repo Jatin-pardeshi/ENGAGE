@@ -1,0 +1,149 @@
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,400,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Pastel Palette */
+  --pastel-pink: #FFB5E8;
+  --pastel-blue: #B5DEFF;
+  --pastel-green: #B5FFD9;
+  --pastel-yellow: #FFFFB5;
+  --pastel-purple: #E1B5FF;
+  --pastel-orange: #FFDFB5;
+  --bg-color: #F4F4F0;
+  
+  /* Brutalist Elements */
+  --border-thick: 3px solid #000;
+  --border-thin: 1.5px solid #000;
+  
+  /* Shadows */
+  --shadow-brutal: 4px 4px 0px 0px #000;
+  --shadow-brutal-hover: 6px 6px 0px 0px #000;
+  --shadow-brutal-active: 0px 0px 0px 0px #000;
+  
+  /* Typography */
+  --font-heading: 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  
+  /* Common spacing */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: #000;
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+/* Utilities */
+.brutalist-card {
+  background-color: #fff;
+  border: var(--border-thick);
+  box-shadow: var(--shadow-brutal);
+  padding: var(--spacing-md);
+  border-radius: 0;
+  transition: all 0.1s ease-in-out;
+}
+
+.brutalist-button {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--pastel-yellow);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-brutal);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.brutalist-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-hover);
+}
+
+.brutalist-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: var(--shadow-brutal-active);
+}
+
+.brutalist-button.pink { background-color: var(--pastel-pink); }
+.brutalist-button.blue { background-color: var(--pastel-blue); }
+.brutalist-button.green { background-color: var(--pastel-green); }
+.brutalist-button.purple { background-color: var(--pastel-purple); }
+
+.brutalist-input {
+  font-family: var(--font-body);
+  padding: var(--spacing-sm);
+  border: var(--border-thick);
+  background-color: #fff;
+  border-radius: 0;
+  width: 100%;
+}
+
+.brutalist-input:focus {
+  outline: none;
+  background-color: var(--pastel-yellow);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border: var(--border-thin);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  background-color: var(--pastel-purple);
+  box-shadow: 2px 2px 0px 0px #000;
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  border-left: var(--border-thick);
+  border-right: var(--border-thick);
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .main-content {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    padding-bottom: 80px; /* space for bottom nav */
+  }
+}
