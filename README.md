@@ -1,16 +1,47 @@
-# React + Vite
+# ENGAGE - Brutalist Social Network
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Welcome to **ENGAGE**, a modern, high-performance social media platform built with React, Vite, and Firebase. It features a unique "Neo-Brutalist" design aesthetic to stand out from generic social apps.
 
-Currently, two official plugins are available:
+🌐 **Live Demo:** [https://Jatin-pardeshi.github.io/ENGAGE/](https://Jatin-pardeshi.github.io/ENGAGE/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Key Features
 
-## React Compiler
+- **The Feed:** Share photos and videos with real-time comments, likes, and a "Close Friends" filter.
+- **Stories:** Ephemeral 24-hour photo and video stories that automatically disappear.
+- **Reels:** An immersive, full-screen vertical scrolling video feed (like TikTok/Instagram Reels).
+- **Global Chat:** Real-time global messaging to interact with the entire community.
+- **Gamification:** Earn XP, level up, and build Day Streaks by engaging with the platform.
+- **Advanced Profiles:** Edit your avatar, display name, and curate your permanent Story Highlights.
+- **Social Graph:** Follow and Unfollow real users across the platform.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the Oxlint configuration
+- **Frontend:** React, Vite, React Router
+- **Styling:** Vanilla CSS (Neo-Brutalist Design)
+- **Backend:** Firebase (Authentication, Firestore Database, Cloud Storage)
+- **Deployment:** GitHub Pages
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🚀 Quick Start (Local Development)
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Jatin-pardeshi/ENGAGE.git
+   cd ENGAGE
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Run the local dev server:**
+   ```bash
+   npm run dev
+   ```
+
+## 📦 Deployment
+To deploy your own version to GitHub Pages:
+```bash
+npm run deploy
+```
+
+---
+*Built with ❤️ for the brutalist social revolution.*

@@ -126,6 +126,7 @@ const Feed = ({ user }) => {
             key={post.id}
             id={post.id}
             author={post.author}
+            authorUid={post.authorUid}
             time={post.createdAt ? new Date(post.createdAt.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now'}
             image={post.image}
             isVideo={post.isVideo}

@@ -1,15 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, ChatCircle, ShareFat, Sparkle, PaperPlaneRight } from '@phosphor-icons/react';
-import { doc, updateDoc, increment, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
+import { Heart, ChatCircle, ShareFat, Sparkle, PaperPlaneRight, DotsThree, Trash } from '@phosphor-icons/react';
+import { doc, updateDoc, increment, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, deleteDoc, arrayUnion, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import './Post.css';
 
-const Post = ({ id, author, time, image, isVideo, isCloseFriends, content, initialLikes = 0, currentUser }) => {
+const Post = ({ id, author, authorUid, time, image, isVideo, isCloseFriends, content, initialLikes = 0, currentUser }) => {
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(true); // Default true so it doesn't flash
+
+  useEffect(() => {
+    // Check if following
+    const checkFollowing = async () => {
+      if (!currentUser || !authorUid || currentUser.uid === authorUid) return;
+      try {
+        const userRef = doc(db, 'users', currentUser.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const following = userSnap.data().following || [];
+          setIsFollowing(following.includes(authorUid));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    checkFollowing();
+  }, [currentUser, authorUid]);
+
+  const handleFollow = async () => {
+    if (!currentUser || !authorUid) return;
+    try {
+      const currentUserRef = doc(db, 'users', currentUser.uid);
+      await updateDoc(currentUserRef, {
+        following: arrayUnion(authorUid)
+      });
+      const authorRef = doc(db, 'users', authorUid);
+      await updateDoc(authorRef, {
+        followers: arrayUnion(currentUser.uid)
+      });
+      setIsFollowing(true);
+      alert(`You are now following ${author}`);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        await deleteDoc(doc(db, 'posts', id));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
 
   useEffect(() => {
     if (!showComments) return;
@@ -69,15 +117,56 @@ const Post = ({ id, author, time, image, isVideo, isCloseFriends, content, initi
         <div className="post-author-info">
           <div className="post-avatar"></div>
           <div>
-            <h3 className="post-author">{author}</h3>
+            <h3 className="post-author" style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+              {author}
+              {currentUser && authorUid && currentUser.uid !== authorUid && !isFollowing && (
+                <button 
+                  onClick={handleFollow}
+                  className="brutalist-button pink"
+                  style={{padding: '2px 8px', fontSize: '0.7rem'}}
+                >
+                  Follow
+                </button>
+              )}
+            </h3>
             <span className="post-time">{time}</span>
           </div>
         </div>
-        {isCloseFriends && (
-          <div className="close-friends-badge">
-            <Sparkle size={14} weight="fill" /> Close Friends
-          </div>
-        )}
+        <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+          {isCloseFriends && (
+            <div className="close-friends-badge">
+              <Sparkle size={14} weight="fill" /> Close Friends
+            </div>
+          )}
+          {currentUser && currentUser.uid === authorUid && (
+            <div style={{position: 'relative'}}>
+              <button 
+                onClick={() => setShowMenu(!showMenu)} 
+                style={{background: 'none', border: 'none', cursor: 'pointer', padding: '0.2rem'}}
+              >
+                <DotsThree size={24} weight="bold" />
+              </button>
+              {showMenu && (
+                <div className="brutalist-card" style={{
+                  position: 'absolute', right: 0, top: '30px', 
+                  padding: '0.5rem', background: '#fff', zIndex: 10,
+                  minWidth: '100px'
+                }}>
+                  <button 
+                    onClick={handleDelete}
+                    style={{
+                      background: 'none', border: 'none', cursor: 'pointer', 
+                      display: 'flex', alignItems: 'center', gap: '0.5rem',
+                      color: 'red', width: '100%', textAlign: 'left'
+                    }}
+                  >
+                    <Trash size={16} /> Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
       
       {image && (

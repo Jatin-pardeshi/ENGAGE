@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, googleProvider } from '../firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, googleProvider, db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogo } from '@phosphor-icons/react';
 import './Login.css';
@@ -12,9 +13,29 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const handleUserDoc = async (user) => {
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      await setDoc(userRef, {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.email.split('@')[0],
+        avatarUrl: '',
+        followers: [],
+        following: [],
+        xp: 0,
+        level: 1,
+        streak: 0,
+        createdAt: new Date().toISOString()
+      });
+    }
+  };
+
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      await handleUserDoc(result.user);
       navigate('/');
     } catch (err) {
       setError(err.message);
@@ -25,11 +46,13 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
+      let result;
       if (isRegistering) {
-        await createUserWithEmailAndPassword(auth, email, password);
+        result = await createUserWithEmailAndPassword(auth, email, password);
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        result = await signInWithEmailAndPassword(auth, email, password);
       }
+      await handleUserDoc(result.user);
       navigate('/');
     } catch (err) {
       setError(err.message);
