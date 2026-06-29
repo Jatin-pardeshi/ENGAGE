@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Gear, Link, MapPin } from '@phosphor-icons/react';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import GamificationWidget from '../components/GamificationWidget';
 import ProfileEditModal from '../components/ProfileEditModal';
@@ -22,6 +22,22 @@ const Profile = () => {
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
           setUserData(userSnap.data());
+        } else {
+          // Fallback: create doc for existing users who signed up before this feature
+          const newUserData = {
+            uid: auth.currentUser.uid,
+            email: auth.currentUser.email,
+            displayName: auth.currentUser.email ? auth.currentUser.email.split('@')[0] : 'User',
+            avatarUrl: '',
+            followers: [],
+            following: [],
+            xp: 0,
+            level: 1,
+            streak: 0,
+            createdAt: new Date().toISOString()
+          };
+          await setDoc(userRef, newUserData);
+          setUserData(newUserData);
         }
 
         // Fetch User's Posts
